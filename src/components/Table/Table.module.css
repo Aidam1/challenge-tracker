@@ -1,0 +1,16 @@
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 775px;
+}
+
+.tHead {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: bottom;
+    background-color: gold;
+    font-size: 1.25rem;
+}
