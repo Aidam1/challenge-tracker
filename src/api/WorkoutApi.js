@@ -1,4 +1,4 @@
-import db from './firebase';
+import { firestore } from './firebase';
 
 
 class WorkoutApi {
