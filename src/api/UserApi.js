@@ -1,9 +1,9 @@
-import db from './firebase';
+import { firestore } from './firebase';
 
 
 class UserApi {
     static get_users() {
-        return db.collection("users").get();
+        return firestore.collection("users").get();
     }
 }
 

@@ -1,13 +1,13 @@
-import db from './firebase';
+import { firestore } from './firebase';
 
 
 class WorkoutApi {
     static get_workouts() {
-        return db.collection("workouts").get();
+        return firestore.collection("workouts").get();
     }
 
     static get_performances(workout_id) {
-        return db.collection("workouts").doc(workout_id).collection("user_workout").get();
+        return firestore.collection("workouts").doc(workout_id).collection("user_workout").get();
     }
 }
 
