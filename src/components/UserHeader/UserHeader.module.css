@@ -5,7 +5,9 @@
 }
 
 .pic {
-    width: 4rem;
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
     border-radius: 50%;
     box-sizing: content-box;
     /* border: 4px solid blue; */
