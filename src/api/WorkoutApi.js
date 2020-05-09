@@ -2,6 +2,8 @@ import { firestore } from './firebase';
 
 
 class WorkoutApi {
+    static collectionRef = firestore.collection("workouts");
+
     static get_workouts() {
         return this.collectionRef.orderBy("date", "desc").get();
     }
