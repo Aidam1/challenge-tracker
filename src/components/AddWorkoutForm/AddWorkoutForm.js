@@ -3,7 +3,7 @@ import { UserContext } from "../../providers/UserProvider";
 import { auth } from "../../api/firebase";
 
 
-const date2iso = (date) => date.toISOString().slice(0, 10);
+// const date2iso = (date) => date.toISOString().slice(0, 10);
 
 
 export default function AddWorkoutForm() {
