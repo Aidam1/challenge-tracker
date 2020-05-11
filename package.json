@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 rm s3://challengetracker.cz --recursive && aws s3 cp --recursive ./build s3://challengetracker.cz"
   },
   "eslintConfig": {
     "extends": "react-app"
