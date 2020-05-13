@@ -28,6 +28,7 @@ jobs:
         run: npm run build
         env:
           CI: false
+          PUBLIC_URL: http://challengetracker.cz.s3-website.eu-central-1.amazonaws.com
 
       # should save this keys in github, settings of the project, secrets :
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
