@@ -5,7 +5,7 @@ class UserApi {
     static collectionRef = firestore.collection("users");
 
     static get_users() {
-        return this.collectionRef.get();
+        return this.collectionRef.orderBy("name", "asc").get();
     }
 
     static put_user(user) {
