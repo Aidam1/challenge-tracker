@@ -70,15 +70,12 @@ export default function Table() {
                 }
             })
             if (userSet.size === 0) { break; }
-
         }
-        console.log(userLosses, "after")
 
         for (let key in users) {
             users[key].loserStreak = userLosses[users[key].id];
         }
 
-        //console.log(users, "FINAL")
         return users;
     }
 
@@ -100,7 +97,6 @@ export default function Table() {
 
     const generateRows = () => {
         if (Array.isArray(workoutsData) && workoutsData.length > 0) {
-
             let userIds = userData.map(user => user.id);
             return (
                 workoutsData.map(workout =>
@@ -111,7 +107,6 @@ export default function Table() {
     }
 
     return (
-
         <table className={`${styles.table}`}>
             <thead >
                 <tr>

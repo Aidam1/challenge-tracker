@@ -1,0 +1,64 @@
+.loginContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding:0.5rem;
+}
+
+.button {
+  color: black;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.buttonLogout {
+  margin: 0 0.5rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.5rem 0.6rem;
+}
+
+.buttonLogout:hover {
+  background-color: #f5f5f5;
+}
+
+.form {
+    max-width: 800px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+}
+
+.fieldContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+}
+
+.input {
+  width: 18rem;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.buttonSubmit {
+  width: 18rem;
+  margin: 0.5rem;
+  background-color: gold;
+  padding: 14px 20px;
+  border: none;
+}
+
+.buttonSubmit:hover {
+    background-color:	#ffbf00;
+}
