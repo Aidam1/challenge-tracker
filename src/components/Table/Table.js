@@ -23,6 +23,7 @@ export default function Table() {
         return userObj;
     }
 
+
     const getWorkouts = async () => {
         let querySnapshot = await WorkoutApi.get_workouts();
 
@@ -79,6 +80,7 @@ export default function Table() {
             )
         }
     }
+
 
     const generateRows = () => {
         if (Array.isArray(workoutsData) && workoutsData.length > 0) {
