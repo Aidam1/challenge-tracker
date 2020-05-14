@@ -5,6 +5,7 @@ import WorkoutApi from "../../api/WorkoutApi";
 import styles from './AddWorkoutForm.module.css'
 import { Formik, Form, Field } from 'formik';
 import UserApi from "../../api/UserApi";
+import { Redirect } from "react-router-dom";
 
 const date2iso = (date) => date.toISOString().slice(0, 10);
 let today = date2iso(new Date());
@@ -14,6 +15,7 @@ export default function AddWorkoutForm() {
     const { displayName, email } = user;
 
     const [userData, setUserData] = useState({});
+    const [redirect, setRedirect] = useState(false);
 
     const getUsers = async () => {
         let userObj = {}
@@ -54,12 +56,13 @@ export default function AddWorkoutForm() {
 
     let onSubmit = values => {
         let formattedData = formatData(values);
+
         WorkoutApi.put_workout(formattedData)
-            .then(function (result) {
-                console.log(result, "result")
-                /*TODO -- Redirect with react-router to main page*/
-            })
-            .catch(function (error) { console.log(error, "error") })
+            .then(result => {
+                console.log(result, "result");
+                setRedirect(true)
+            },
+                reject => console.log(reject, "error"))
     }
 
     const renderUsers = () => {
@@ -85,7 +88,7 @@ export default function AddWorkoutForm() {
                 <button className={`${styles.button} ${styles.buttonLogout}`} onClick={() => { auth.signOut() }}>Odhlásit se</button>
             </div>
             <div className={`${styles.formContainer}`}>
-                {Object.keys(userData).length > 0 &&
+                {Object.keys(userData).length > 0 && !redirect &&
                     <Formik initialValues={getInitialValues()} onSubmit={onSubmit} >
                         <Form className={`${styles.form}`}>
 
@@ -109,6 +112,7 @@ export default function AddWorkoutForm() {
 
                 }
             </div>
+            {redirect && <Redirect to="/" />}
         </div>
 
     )
