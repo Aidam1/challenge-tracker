@@ -5,25 +5,27 @@ import styles from './Table.module.css';
 import TableRow from '../TableRow.js/TableRow';
 import UserHeader from '../UserHeader/UserHeader';
 import WorkoutApi from '../../api/WorkoutApi';
+import SpinnerLoader from '../SpinnerLoader/SpinnerLoader';
 
 
 export default function Table() {
 
     const [userData, setUserData] = useState([]);
     const [workoutsData, setWorkoutsData] = useState([]);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
     const getUsers = async () => {
+        let userObj = {}
         let querySnapshot = await UserApi.get_users();
-        let result = querySnapshot.docs.map(doc => {
-            let user = doc.data();
-            user.id = doc.id;
-            return user;
+        querySnapshot.docs.forEach(doc => {
+            userObj[doc.id] = doc.data()
         });
-        return result;
+        return userObj;
     }
 
     const getWorkouts = async () => {
         let querySnapshot = await WorkoutApi.get_workouts();
+
         let result = querySnapshot.docs.map(doc => {
             let workout = doc.data();
             let winnerId = null;
@@ -34,70 +36,54 @@ export default function Table() {
                 }
             }
             workout.performances[winnerId].win = true;
-
             return workout;
         });
         return result;
     }
 
-    const getAllData = async () => {
-        let [users, workouts] = await Promise.all([getUsers(), getWorkouts()])
-        let updatedUsers = loserStreak(users, workouts);
-        ReactDOM.unstable_batchedUpdates(() => {
-            setUserData(updatedUsers);
-            setWorkoutsData(workouts);
-        })
-    }
-
-
     const loserStreak = (users, workouts) => {
-        let userLosses = {};
-        console.log(users, workouts);
-
-        let userSet = new Set(users.map(user => user.id));
-
-        for (let i = 0; i < workouts.length; i++) {
-            userSet.forEach(user => {
-
-                if (!userLosses[user]) {
-                    userLosses[user] = 0;
-                }
-
-                if (workouts[i].performances[user]?.win) {
-                    userSet.delete(user);
+        Object.keys(users).forEach(user => {
+            users[user].loserStreak = 0;
+            for (const workout of workouts) {
+                if (!workout.performances[user]?.win) {
+                    users[user].loserStreak += 1;
                 } else {
-                    userLosses[user] += 1;
+                    break;
                 }
-            })
-            if (userSet.size === 0) { break; }
-        }
-
-        for (let key in users) {
-            users[key].loserStreak = userLosses[users[key].id];
-        }
-
+            }
+        })
         return users;
     }
 
     useEffect(() => {
+        const getAllData = async () => {
+            let [users, workouts] = await Promise.all([getUsers(), getWorkouts()])
+            let updatedUsers = loserStreak(users, workouts);
+            ReactDOM.unstable_batchedUpdates(() => {
+                setUserData(updatedUsers);
+                setWorkoutsData(workouts);
+                setIsLoadingData(false);
+            })
+        }
         getAllData();
     }, [])
 
     const generateUsers = () => {
-        if (Array.isArray(userData) && userData.length > 0) {
+        if (Object.keys(userData).length > 0) {
             return (
-                userData.map(user =>
-                    <th key={user.name} className={`${styles.tHead}`}>
-                        <UserHeader user={user} />
+                Object.keys(userData).map(user =>
+                    <th key={user} className={`${styles.tHead}`}>
+                        <UserHeader user={userData[user]} />
                     </th>
                 )
             )
         }
     }
 
+
     const generateRows = () => {
         if (Array.isArray(workoutsData) && workoutsData.length > 0) {
-            let userIds = userData.map(user => user.id);
+            let userIds = Object.keys(userData);
             return (
                 workoutsData.map(workout =>
                     <TableRow key={workout.date} workout={workout} users={userIds} />
@@ -107,19 +93,18 @@ export default function Table() {
     }
 
     return (
-        <table className={`${styles.table}`}>
-            <thead >
-                <tr>
-                    <th className={`${styles.tHead} `}>Den</th>
-                    <th className={`${styles.tHead}`}>Cvik</th>
-                    {generateUsers()}
-
-                </tr>
-            </thead>
-            <tbody>
-                {generateRows()}
-            </tbody>
-        </table>
-
+        isLoadingData ? <SpinnerLoader /> :
+            <table className={`${styles.table}`}>
+                <thead >
+                    <tr>
+                        <th className={`${styles.tHead} `}>Den</th>
+                        <th className={`${styles.tHead}`}>Cvik</th>
+                        {generateUsers()}
+                    </tr>
+                </thead>
+                <tbody>
+                    {generateRows()}
+                </tbody>
+            </table>
     )
 }
