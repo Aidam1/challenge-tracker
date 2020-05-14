@@ -114,7 +114,6 @@ export default function AddWorkoutForm() {
                     </Formik>
                 }
             </div>
-            {redirect && <Redirect to="/" />}
         </div>
 
     )

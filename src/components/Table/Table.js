@@ -14,8 +14,6 @@ export default function Table() {
     const [workoutsData, setWorkoutsData] = useState([]);
     const [isLoadingData, setIsLoadingData] = useState(true);
 
-
-
     const getUsers = async () => {
         let userObj = {}
         let querySnapshot = await UserApi.get_users();
@@ -24,7 +22,6 @@ export default function Table() {
         });
         return userObj;
     }
-
 
     const getWorkouts = async () => {
         let querySnapshot = await WorkoutApi.get_workouts();
@@ -70,8 +67,6 @@ export default function Table() {
         }
         getAllData();
     }, [])
-
-
 
     const generateUsers = () => {
         if (Object.keys(userData).length > 0) {
