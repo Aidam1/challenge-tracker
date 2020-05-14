@@ -21,7 +21,7 @@ export default function TableRow(props) {
                     )
                 } else {
                     return (
-                        <td key={user} className={loss} ><span role="img" aria-label="sleepybro" style={{ fontSize: "1.5rem" }}>😴</span></td >
+                        <td key={user} className={loss} ><span role="img" aria-label="sleepy" style={{ fontSize: "1.5rem" }}>😴</span></td >
                     )
                 }
             }

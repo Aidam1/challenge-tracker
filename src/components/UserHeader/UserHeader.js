@@ -10,7 +10,7 @@ export default function UserHeader(props) {
             <img className={`${styles.pic}`} src={user.image} alt={user.name}></img>
             <span className={`${styles.name}`}>{user.name}</span>
             <span className={`${styles.losses}`}>Aktuální prohry: {user.loserStreak}</span>
-            <span className={`${styles.dinners}`}>Dluží večeří: {user.dinners} </span>
+            <span className={`${styles.dinners}`}>Platí večeří: {user.dinners} </span>
         </div>
     )
 }
