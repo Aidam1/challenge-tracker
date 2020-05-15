@@ -1,14 +1,31 @@
 .center {
-  margin: auto;
   text-align: center;
-  /* width: 50%; */
-  /* max-width: 400px; */
-  min-width: 150px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 5rem;
-    color: #089404;
+}
 
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.spin {
+  animation: spin 2s linear infinite;
+}
+
+.loader {
+  width: 5rem;
+  vertical-align: middle;
+}
+
+.text {
+  font-size: 1rem;
+  margin: 0.4rem;
+  color: black;
 }

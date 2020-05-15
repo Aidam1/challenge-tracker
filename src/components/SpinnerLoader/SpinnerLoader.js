@@ -3,9 +3,11 @@ import styles from './SpinnerLoader.module.css'
 
 
 function SpinnerLoader() {
+
     return (
         <div className={`${styles.center}`}>
-            <i className={`fas fa-virus fa-spin`}></i>
+            <img src="/virus-font-awesome.svg" className={`${styles.spin} ${styles.loader}`} alt="virus icon font awesome"></img>
+            <div className={`${styles.text}`}>Načítám data...</div>
         </div>
     )
 }
