@@ -23,14 +23,13 @@
 }
 
 .tDataWin {
-color: green;
+    color: green;
 }
-
 
 .date {
- font-weight: normal;   
+    font-weight: normal;   
 }
 
-.exercise {
+.exercise::first-letter {
     text-transform: capitalize;
 }
