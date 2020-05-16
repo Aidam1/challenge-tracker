@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './TableRow.module.css';
 
-
 export default function TableRow(props) {
     let { workout, users } = props;
 
