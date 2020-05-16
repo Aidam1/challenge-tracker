@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../providers/UserProvider";
+import { StateContext } from "../../providers/StateProvider";
 import { auth } from "../../api/firebase";
 import WorkoutApi from "../../api/WorkoutApi";
 import styles from './AddWorkoutForm.module.css'
 import { Formik, Form, Field } from 'formik';
-import UserApi from "../../api/UserApi";
 import { Redirect } from "react-router-dom";
 
 const date2iso = (date) => date.toISOString().slice(0, 10);
@@ -14,18 +14,8 @@ export default function AddWorkoutForm() {
     const user = useContext(UserContext);
     const { displayName, email } = user;
 
-    const [userData, setUserData] = useState({});
+    const { users } = useContext(StateContext);
     const [redirect, setRedirect] = useState(false);
-
-    const getUsers = async () => {
-        let userObj = {}
-        let querySnapshot = await UserApi.get_users();
-        querySnapshot.docs.forEach(doc => {
-            userObj[doc.id] = doc.data()
-        });
-        setUserData(userObj);
-        return userObj;
-    }
 
     const getInitialValues = () => {
         let initialValues = {
@@ -33,7 +23,7 @@ export default function AddWorkoutForm() {
             exercise: "",
             users: {},
         }
-        Object.keys(userData).forEach(user => { initialValues.users[user] = "" });
+        Object.keys(users).forEach(user => { initialValues.users[user] = "" });
         return initialValues;
     }
 
@@ -66,20 +56,16 @@ export default function AddWorkoutForm() {
     }
 
     const renderUsers = () => {
-        if (Object.keys(userData).length > 0) {
-            return (Object.keys(userData).map(user =>
-                <div className={`${styles.fieldContainer}`} key={userData[user].name}>
-                    <label htmlFor={`users.${user}`} className={`${styles.label}`}>{userData[user].name}</label>
+        if (Object.keys(users).length > 0) {
+            return (Object.keys(users).map(user =>
+                <div className={`${styles.fieldContainer}`} key={users[user].name}>
+                    <label htmlFor={`users.${user}`} className={`${styles.label}`}>{users[user].name}</label>
                     <Field type='number' className={`${styles.input} `} id={`users.${user}`} name={`users.${user}`} />
                 </div>
             )
             )
         }
     }
-
-    useEffect(() => {
-        getUsers();
-    }, [])
 
     return (
         <div>
@@ -91,7 +77,7 @@ export default function AddWorkoutForm() {
             </div>
 
             <div className={`${styles.formContainer}`}>
-                {Object.keys(userData).length > 0 && !redirect &&
+                {Object.keys(users).length > 0 && !redirect &&
                     <Formik initialValues={getInitialValues()} onSubmit={onSubmit} >
                         <Form className={`${styles.form}`}>
 

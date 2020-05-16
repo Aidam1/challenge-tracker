@@ -6,6 +6,7 @@ import SignIn from "../SignIn/SignIn";
 
 export default function Admin() {
     const user = useContext(UserContext);
+
     return (
         user ?
             <AddWorkoutForm />
