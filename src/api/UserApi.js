@@ -4,8 +4,15 @@ import { firestore } from './firebase';
 class UserApi {
     static collectionRef = firestore.collection("users");
 
-    static get_users() {
-        return this.collectionRef.orderBy("name", "asc").get();
+    static connect_users(setData, setLoading) {
+        this.collectionRef.orderBy("name", "asc").onSnapshot(querySnapshot => {
+            let userObj = {}
+            querySnapshot.docs.forEach(doc => {
+                userObj[doc.id] = doc.data();
+            });
+            setData(userObj);
+            setLoading(false);
+        });
     }
 
     static put_user(user) {
