@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styles from './Table.module.css';
-import TableRow from '../TableRow.js/TableRow';
+import TableRow from '../TableRow/TableRow';
 import UserHeader from '../UserHeader/UserHeader';
 import { StateContext } from '../../providers/StateProvider';
 
@@ -34,10 +34,9 @@ export default function Table() {
 
     const generateRows = () => {
         if (Array.isArray(workouts) && workouts.length > 0) {
-            let userIds = Object.keys(users);
             return (
                 workouts.map(workout =>
-                    <TableRow key={workout.date} workout={workout} users={userIds} />
+                    <TableRow key={workout.date} workout={workout} users={users} />
                 )
             )
         }
