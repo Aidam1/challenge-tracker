@@ -5,7 +5,7 @@ export default function TableRow(props) {
     let { workout, users } = props;
 
     let date = new Date(workout.date);
-    let formattedDate = `${date.getDate()}. ${date.getMonth()}. ${date.getFullYear()}`
+    let formattedDate = `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`
 
     let loss = `${styles.tData} ${styles.tDataLoss}`;
     let win = `${styles.tData} ${styles.tDataWin}`;
