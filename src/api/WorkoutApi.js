@@ -8,14 +8,19 @@ class WorkoutApi {
         return this.collectionRef.orderBy("date", "desc").onSnapshot(querySnapshot => {
             let result = querySnapshot.docs.map(doc => {
                 let workout = doc.data();
-                let winnerId = null;
+                let winnerId = [];
+
                 for (let [user, performance] of Object.entries(workout.performances)) {
                     performance.win = false;
-                    if (!winnerId || performance.value > workout.performances[winnerId].value) {
-                        winnerId = user;
+                    if (winnerId.length === 0 || performance.value === workout.performances[winnerId[0]].value) {
+                        winnerId.push(user);
+                    } else if (performance.value > workout.performances[winnerId[0]].value) {
+                        winnerId = [user];
                     }
                 }
-                workout.performances[winnerId].win = true;
+                winnerId.forEach(winner => {
+                    workout.performances[winner].win = true;
+                })
                 return workout;
             });
             setData(result);
