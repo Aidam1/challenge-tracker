@@ -18,7 +18,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-firestore.enablePersistence();
+firestore.enablePersistence({"synchronizeTabs": true});
 
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
